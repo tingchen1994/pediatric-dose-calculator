@@ -122,4 +122,4 @@ pediatric-dose-calculator/
 ## GitHub 仓库
 
 <!-- 占位符：发布时替换为真实仓库地址 -->
-`https://github.com/<your-account>/pediatric-dose-calculator`
+`https://github.com/tingchen1994/pediatric-dose-calculator`

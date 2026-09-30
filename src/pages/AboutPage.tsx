@@ -95,7 +95,7 @@ export function AboutPage() {
         <p className="mt-3 text-xs text-slate-500">
           GitHub 仓库（占位）：
           <span className="font-num text-teal-700">
-            https://github.com/&lt;your-account&gt;/pediatric-dose-calculator
+            https://github.com/tingchen1994/pediatric-dose-calculator
           </span>
         </p>
       </section>
