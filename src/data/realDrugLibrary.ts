@@ -1,13 +1,12 @@
 /**
- * 真实药物导入库（由开发者提供的院内参考资料人工摘录）。
+ * 真实药物导入库（由开发者提供的参考资料人工摘录，已脱敏）。
  *
  * ★ 录入规则（重要）：
- * 1. 全部条目摘自下列院内参考资料原文，未经 AI 编造：
- *    - 《儿科常用药物剂量整理》（呼吸内科常用药物）
- *    - 《儿科用药整理》（儿科常用药用法 / 儿保科用药）
- *    - 《外科常用药物剂量和注意事项》
- *    - 《肿瘤外科住院医师入科培训及手册（2022.04 修订）》
- *    - 《NICU 入科须知》
+ * 1. 全部条目摘自参考资料 A–D 原文，未经 AI 编造：
+ *    - 参考资料 A：儿科常用药物剂量类
+ *    - 参考资料 B：儿科常用药用法类
+ *    - 参考资料 C：外科用药类
+ *    - 参考资料 D：肿瘤用药类
  * 2. 剂量为区间时统一取 **下限值**，完整原始区间与适用条件写在每条备注中；
  *    「bid 或 q8h」等可选频次取较低频次，避免每日总量被抬高。
  * 3. 导入后的模板一律为「未审核」状态，必须由管理员与原文核对后
@@ -43,12 +42,12 @@ export interface RealDrugSeed {
   notes: string;
 }
 
-const SRC_KEPU = '《儿科常用药物剂量整理》（呼吸内科常用药物，院内资料）';
-const SRC_YONGFA = '《儿科用药整理》（儿科常用药用法/儿保科用药，院内资料）';
-const SRC_WAIKE = '《外科常用药物剂量和注意事项》（院内资料）';
-const SRC_ZHONGLIU = '《肿瘤外科住院医师入科培训及手册（2022.04 修订）';
-const V_KEPU = '院内资料摘录（未标注版本号，以原文为准）';
-const V_ZHONGLIU = '2022.04 修订版（院内资料）';
+const SRC_KEPU = '参考资料A：儿科常用药物剂量类（摘录）';
+const SRC_YONGFA = '参考资料B：儿科常用药用法类（摘录）';
+const SRC_WAIKE = '参考资料C：外科用药类（摘录）';
+const SRC_ZHONGLIU = '参考资料D：肿瘤用药类（摘录）';
+const V_KEPU = '摘录版（原文未标注版本号，以原文为准）';
+const V_ZHONGLIU = '2022.04 修订版（摘录）';
 
 export const REAL_LIBRARY_NOTE =
   '录入说明：剂量区间取下限值，完整区间与频次见备注；导入后为「未审核」状态，请与原文核对后再使用。';
@@ -66,7 +65,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: SRC_KEPU,
     sourceVersion: V_KEPU,
-    notes: '原文：12.5-25 mg/kg/次，每 6 小时一次；最大量 4-8 g/d（取 4 g/d）。《儿科用药整理》：新生儿 50 mg/kg/次（bid）。区间取下限。',
+    notes: '原文：12.5-25 mg/kg/次，每 6 小时一次；最大量 4-8 g/d（取 4 g/d）。参考资料B：新生儿 50 mg/kg/次（bid）。区间取下限。',
   },
   {
     id: 'real-002',
@@ -79,7 +78,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_YONGFA}`,
     sourceVersion: V_KEPU,
-    notes: '原文：50-100 mg/kg/d，bid；一般感染最大量 2.25 g BID（舒巴坦最大 4 g/d）。《儿科用药整理》：25-50 mg/kg/次（bid），最大剂量 2.25 g bid。区间取下限。',
+    notes: '原文：50-100 mg/kg/d，bid；一般感染最大量 2.25 g BID（舒巴坦最大 4 g/d）。参考资料B：25-50 mg/kg/次（bid），最大剂量 2.25 g bid。区间取下限。',
   },
   {
     id: 'real-003',
@@ -92,7 +91,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：30 mg/kg/次，每日 2-3 次；本病房一般 100 mg/kg/d 分 2 次 BID。注意：用 NS 稀释，不用糖水！',
+    notes: '原文：30 mg/kg/次，每日 2-3 次；一般用法 100 mg/kg/d 分 2 次 BID。注意：用 NS 稀释，不用糖水！',
   },
   {
     id: 'real-004',
@@ -159,7 +158,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：1.0g/瓶（1:1）80-160 mg/kg/d，分 2 次（舒巴坦最大剂量 4 g/d）；1.5g/瓶（2:1）160-240 mg/kg/d，分 2-3 次；重症感染最好 q6h 用；新生儿每 12 小时给药。《外科用药》：每日 30-60 mg/kg q12h，严重感染可增至 240 mg/kg/d 分 2-4 次。区间取儿科下限。',
+    notes: '原文：1.0g/瓶（1:1）80-160 mg/kg/d，分 2 次（舒巴坦最大剂量 4 g/d）；1.5g/瓶（2:1）160-240 mg/kg/d，分 2-3 次；重症感染最好 q6h 用；新生儿每 12 小时给药。参考资料C：每日 30-60 mg/kg q12h，严重感染可增至 240 mg/kg/d 分 2-4 次。区间取儿科下限。',
   },
   {
     id: 'real-009',
@@ -185,7 +184,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：一日 40-80 mg/kg，分 3-4 次给予（《外科用药》）；肿瘤科：总量 40-80 mg/kg·d，分 2 次，静滴（取分 2 次）。区间取下限。',
+    notes: '原文：一日 40-80 mg/kg，分 3-4 次给予（参考资料C）；参考资料D：总量 40-80 mg/kg·d，分 2 次，静滴（取分 2 次）。区间取下限。',
   },
   {
     id: 'real-011',
@@ -198,7 +197,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}`,
     sourceVersion: V_KEPU,
-    notes: '原文：0.125g/袋，20-40 mg/kg/d，tid，po（总量不超过 1 g/d）；《外科用药》：每日 20 mg/kg q8h，重症可每日 40 mg/kg，一日最大剂量 1 g。区间取下限。',
+    notes: '原文：0.125g/袋，20-40 mg/kg/d，tid，po（总量不超过 1 g/d）；参考资料C：每日 20 mg/kg q8h，重症可每日 40 mg/kg，一日最大剂量 1 g。区间取下限。',
   },
   {
     id: 'real-012',
@@ -252,7 +251,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：体重<40kg 的儿童和婴儿 15 mg/kg，q6h（儿科：q8h 或 q6h），每天总剂量不超过 2 g；最大量不超过 1 g/次；体重≥40kg 1-2 g/d 分 3-4 次，最大 4 g/d；肿瘤科另载 20 mg/kg/次 Q8H。三线抗生素（粒缺伴感染）。区间取下限。',
+    notes: '原文：体重<40kg 的儿童和婴儿 15 mg/kg，q6h（儿科：q8h 或 q6h），每天总剂量不超过 2 g；最大量不超过 1 g/次；体重≥40kg 1-2 g/d 分 3-4 次，最大 4 g/d；参考资料D另载 20 mg/kg/次 Q8H。三线抗生素（粒缺伴感染）。区间取下限。',
   },
   {
     id: 'real-016',
@@ -278,7 +277,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_YONGFA}`,
     sourceVersion: V_KEPU,
-    notes: '原文：儿童、婴儿每天 40 mg/kg，q8h（病房一般分 3 次 Q8H；《儿科常用药物剂量整理》：分 2-4 次给药）；新生儿 10-15 mg/kg/次，日龄<7 天 Q12H、7-28 天 Q8H；儿童、婴儿每次静注时间 60 分钟以上；肿瘤科另载 20 mg/kg/次 Q12H。区间取下限。',
+    notes: '原文：儿童、婴儿每天 40 mg/kg，q8h（一般分 3 次 Q8H；参考资料A：分 2-4 次给药）；新生儿 10-15 mg/kg/次，日龄<7 天 Q12H、7-28 天 Q8H；儿童、婴儿每次静注时间 60 分钟以上；参考资料D另载 20 mg/kg/次 Q12H。区间取下限。',
   },
   {
     id: 'real-018',
@@ -395,7 +394,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：10 mg/kg/次，qd（静滴/口服）；静滴用 100ml 溶液化 0.1g；成人 500 mg/次 QD；《外科用药》：连续输注 3 天 qd。',
+    notes: '原文：10 mg/kg/次，qd（静滴/口服）；静滴用 100ml 溶液化 0.1g；成人 500 mg/次 QD；参考资料C：连续输注 3 天 qd。',
   },
   {
     id: 'real-027',
@@ -423,7 +422,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：预防口腔念珠菌 3-6 mg/kg/d，qd；治疗剂量 6-12 mg/kg/d，QD，连用 7-14 天；《外科用药》治疗 10 mg/kg qd、预防 3 mg/kg 每周二次；成人 50-100 mg/次 QD。区间取治疗剂量下限。',
+    notes: '原文：预防口腔念珠菌 3-6 mg/kg/d，qd；治疗剂量 6-12 mg/kg/d，QD，连用 7-14 天；参考资料C治疗 10 mg/kg qd、预防 3 mg/kg 每周二次；成人 50-100 mg/次 QD。区间取治疗剂量下限。',
   },
   {
     id: 'real-029',
@@ -449,7 +448,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}`,
     sourceVersion: V_KEPU,
-    notes: '原文：5 mg/kg/次，bid；每次静滴 1 小时以上；疗程 2-3 周（《外科用药》：疗程 14-21 天）。',
+    notes: '原文：5 mg/kg/次，bid；每次静滴 1 小时以上；疗程 2-3 周（参考资料C：疗程 14-21 天）。',
   },
   {
     id: 'real-031',
@@ -546,7 +545,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
   },
   {
     id: 'real-038',
-    name: '盐酸氨溴索（沐舒坦，本病房用法）',
+    name: '盐酸氨溴索（沐舒坦）',
     calcMode: 'weight-per-dose',
     dosePerUnit: 1,
     timesPerDay: 1,
@@ -555,7 +554,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: SRC_KEPU,
     sourceVersion: V_KEPU,
-    notes: '原文：本病房用法 1-2 mg/kg/次，QD；年龄分层见原文（6-12 岁 15 mg/次每日 2-3 次；2-6 岁/2 岁以下 7.5 mg/次每日 2-3 次）；ARDS 时 30 mg/kg/d，分 4 次；《外科用药》：注射液 <2 岁 7.5 mg/次 bid 等。区间取病房用法下限。',
+    notes: '原文：1-2 mg/kg/次，QD；年龄分层见原文（6-12 岁 15 mg/次每日 2-3 次；2-6 岁/2 岁以下 7.5 mg/次每日 2-3 次）；ARDS 时 30 mg/kg/d，分 4 次；参考资料C：注射液 <2 岁 7.5 mg/次 bid 等。区间取原文用法下限。',
   },
   {
     id: 'real-039',
@@ -583,7 +582,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：<2 岁 0.7 mg/kg，qd，最大可至 3 mg/kg；10-20kg：10 mg qd，最大可至 20 mg；>20kg：20 mg qd，最大可至 40 mg；qd-q12h；肿瘤科：化疗后进食即停。区间取下限。',
+    notes: '原文：<2 岁 0.7 mg/kg，qd，最大可至 3 mg/kg；10-20kg：10 mg qd，最大可至 20 mg；>20kg：20 mg qd，最大可至 40 mg；qd-q12h；参考资料D：化疗后进食即停。区间取下限。',
   },
   {
     id: 'real-041',
@@ -609,7 +608,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：1.5 mg/kg/次，tid，疗程不超过 7 天；《外科用药》按年龄段 10-60 mg/次 tid。区间取 kg 记法下限。',
+    notes: '原文：1.5 mg/kg/次，tid，疗程不超过 7 天；参考资料C按年龄段 10-60 mg/次 tid。区间取 kg 记法下限。',
   },
 
   // ======================= 心血管 / 利尿 =======================
@@ -637,7 +636,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：1-2 mg/kg/d，分 1-2 次，po（取分 2 次）；本类药可使胆红素升高；《外科用药》：每日 1-2 mg，bid。区间取下限。',
+    notes: '原文：1-2 mg/kg/d，分 1-2 次，po（取分 2 次）；本类药可使胆红素升高；参考资料C：每日 1-2 mg，bid。区间取下限。',
   },
   {
     id: 'real-045',
@@ -650,7 +649,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：1-2 mg/kg/d，分 1-2 次，po（取分 2 次）；保钾利尿剂；《外科用药》：1-3 mg/kg，bid。区间取下限。',
+    notes: '原文：1-2 mg/kg/d，分 1-2 次，po（取分 2 次）；保钾利尿剂；参考资料C：1-3 mg/kg，bid。区间取下限。',
   },
   {
     id: 'real-046',
@@ -730,7 +729,7 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_YONGFA}`,
     sourceVersion: V_KEPU,
-    notes: '原文：负荷量 10 mg/kg/次，im（极量 0.2 g/次）；负荷量可重复，最大达 3 次；维持量 3-5 mg/kg/d，分 2 次，im 或 po；另一资料 10-20 mg/kg，最大 300 mg/次；《外科用药》2 mg/kg（长效镇静）。区间取负荷量下限。',
+    notes: '原文：负荷量 10 mg/kg/次，im（极量 0.2 g/次）；负荷量可重复，最大达 3 次；维持量 3-5 mg/kg/d，分 2 次，im 或 po；另一资料 10-20 mg/kg，最大 300 mg/次；参考资料C2 mg/kg（长效镇静）。区间取负荷量下限。',
   },
   {
     id: 'real-052',
@@ -810,6 +809,6 @@ export const REAL_DRUG_LIBRARY: RealDrugSeed[] = [
     concentration: null,
     source: `${SRC_KEPU}；${SRC_WAIKE}；${SRC_ZHONGLIU}`,
     sourceVersion: V_KEPU,
-    notes: '原文：30-60 mg/kg/d，qd（《外科用药》：50 mg/kg qd）。区间取下限。',
+    notes: '原文：30-60 mg/kg/d，qd（参考资料C：50 mg/kg qd）。区间取下限。',
   },
 ];

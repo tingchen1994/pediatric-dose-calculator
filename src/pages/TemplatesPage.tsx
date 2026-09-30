@@ -105,7 +105,7 @@ export function TemplatesPage() {
           <h1 className="text-xl font-bold text-slate-900">演示药物模板管理</h1>
           <p className="mt-1 text-sm text-slate-500">
             内置 {builtinTemplates.filter((t) => t.id !== 'blank').length} 个虚构演示模板 +
-            空白模板 + 院内资料导入 {realTemplates.length} 个 + 自定义{' '}
+            空白模板 + 真实药物库导入 {realTemplates.length} 个 + 自定义{' '}
             {customTemplates.length} 个
           </p>
         </div>
@@ -143,7 +143,7 @@ export function TemplatesPage() {
         >
           <option value="all">全部（{templates.length}）</option>
           <option value="builtin">内置虚构演示（{builtinTemplates.length}）</option>
-          <option value="real">院内资料导入（{realTemplates.length}）</option>
+          <option value="real">真实药物库导入（{realTemplates.length}）</option>
           <option value="custom">我的自定义（{customTemplates.length}）</option>
         </select>
         {importMessage && (
@@ -161,15 +161,15 @@ export function TemplatesPage() {
             并填写<b>来源、版本/发布日期、审核状态</b>；
           </li>
           <li>本项目不存在「根据药物名称自动生成剂量」的逻辑；</li>
-          <li>可参考的权威资料示例：药品说明书、临床诊疗指南、本院经审核的用药手册
+          <li>可参考的权威资料示例：药品说明书、临床诊疗指南、经审核的用药手册
             （需由管理员自行核实后录入）。</li>
         </ul>
       </WarningBox>
 
       {realTemplates.length > 0 && (
-        <WarningBox variant="info" title={`真实药物导入库（${realTemplates.length} 个，来自院内资料摘录）`}>
-          {REAL_LIBRARY_NOTE}导入条目摘自《儿科常用药物剂量整理》《儿科用药整理》《外科常用药物剂量和注意事项》
-          《肿瘤外科住院医师入科培训及手册（2022.04 修订）》等资料原文，统一标记为「未审核」；
+        <WarningBox variant="info" title={`真实药物导入库（${realTemplates.length} 个，摘自公开医学参考资料）`}>
+          {REAL_LIBRARY_NOTE}导入条目摘自参考资料 A–D（儿科用药、外科用药、肿瘤用药类资料）原文，
+          已脱敏处理，统一标记为「未审核」；
           请核对原文与最新说明书后，在卡片中改为「已审核」再使用。
         </WarningBox>
       )}
@@ -200,7 +200,7 @@ export function TemplatesPage() {
                 )}
                 {isRealLibraryTemplate(t) && (
                   <span className="rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-bold text-indigo-700">
-                    院内资料·未审核
+                    真实数据·未审核
                   </span>
                 )}
                 <span

@@ -67,9 +67,9 @@ describe('真实药物库导入（内存存储环境）', () => {
   });
 
   it('导入后一律为「未审核」、非虚构、可编辑的自定义模板', () => {
-    // 匹配每条种子的来源名称，确保来源字段完整带入
+    // 匹配每条种子的来源名称，确保来源字段完整带入（脱敏后为「参考资料X」格式）
     for (const s of REAL_DRUG_LIBRARY as RealDrugSeed[]) {
-      expect(s.source).toMatch(/院内资料|2022/);
+      expect(s.source).toMatch(/参考资料[ABCD]/);
     }
   });
 

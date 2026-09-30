@@ -148,7 +148,7 @@ export function CalculatorForm({
                 </option>
               ))}
             {templates.some((t) => !t.builtin && t.id.startsWith('real-')) && (
-              <optgroup label="院内资料导入（未审核，需核对后使用）">
+              <optgroup label="真实药物库导入（未审核，需核对后使用）">
                 {templates
                   .filter((t) => !t.builtin && t.id.startsWith('real-'))
                   .map((t) => (
@@ -181,7 +181,7 @@ export function CalculatorForm({
             className={errors['templateName'] ? INPUT_ERROR_CLASS : INPUT_CLASS}
             value={value.templateName}
             onChange={(e) => onChange({ templateName: e.target.value })}
-            placeholder="例如：模拟药物A / 院内 XX 注射液（已核实）"
+            placeholder="例如：模拟药物A / XX 注射液（已核实）"
           />
         </FieldRow>
 
