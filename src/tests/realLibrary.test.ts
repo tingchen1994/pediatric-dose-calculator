@@ -6,6 +6,7 @@ import {
 import {
   importRealDrugLibrary,
   isRealLibraryImported,
+  loadUserTemplates,
 } from '../utils/storage';
 
 describe('真实药物导入库数据质量', () => {
@@ -56,14 +57,19 @@ describe('真实药物导入库数据质量', () => {
 });
 
 describe('真实药物库导入（内存存储环境）', () => {
-  it('首次导入全部条目；再次导入幂等跳过', () => {
+  it('首次导入全部条目；重复导入幂等（real-* 条目总数始终等于库大小，不重复叠加）', () => {
     const first = importRealDrugLibrary();
     expect(first.imported).toBe(REAL_DRUG_LIBRARY.length);
     expect(isRealLibraryImported()).toBe(true);
+    expect(
+      loadUserTemplates().filter((t) => t.id.startsWith('real-')).length,
+    ).toBe(REAL_DRUG_LIBRARY.length);
 
     const second = importRealDrugLibrary();
-    expect(second.imported).toBe(0);
-    expect(second.skipped).toBe(REAL_DRUG_LIBRARY.length);
+    expect(second.imported).toBe(REAL_DRUG_LIBRARY.length);
+    expect(
+      loadUserTemplates().filter((t) => t.id.startsWith('real-')).length,
+    ).toBe(REAL_DRUG_LIBRARY.length);
   });
 
   it('导入后一律为「未审核」、非虚构、可编辑的自定义模板', () => {

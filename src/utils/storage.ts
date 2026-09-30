@@ -14,6 +14,8 @@ import { REAL_DRUG_LIBRARY, type RealDrugSeed } from '../data/realDrugLibrary';
 const TEMPLATE_KEY = 'pdc.userTemplates.v1';
 const HISTORY_KEY = 'pdc.history.v1';
 const REAL_LIBRARY_FLAG = 'pdc.realLibraryImported.v1';
+/** 真实药物库版本号：库内容升级（如脱敏）时递增，浏览器中旧版本条目会被自动刷新 */
+const REAL_LIBRARY_VERSION = 2;
 /** 历史记录上限，超出后只保留最新记录 */
 const HISTORY_LIMIT = 200;
 
@@ -73,11 +75,12 @@ export function saveUserTemplates(templates: DrugTemplate[]): boolean {
 
 /** 全部可用模板 = 内置虚构演示模板 + 空白模板 + 用户自定义模板（含导入的真实药物库） */
 export function loadAllTemplates(): DrugTemplate[] {
-  // 首次加载时自动导入真实药物库（一次性，按浏览器 localStorage 标记）
+  // 首次加载、或库版本升级时自动导入/刷新真实药物库（每会话一次）
   if (!librarySeedChecked) {
     librarySeedChecked = true;
     try {
-      if (!isRealLibraryImported()) {
+      const flag = readJSON<{ version?: number } | null>(REAL_LIBRARY_FLAG, null);
+      if (!flag || flag.version !== REAL_LIBRARY_VERSION) {
         importRealDrugLibrary();
       }
     } catch {
@@ -87,31 +90,32 @@ export function loadAllTemplates(): DrugTemplate[] {
   return [...BUILTIN_TEMPLATES, ...loadUserTemplates()];
 }
 
-/** 判断真实药物库是否已导入当前浏览器 */
+/** 判断真实药物库是否已导入当前浏览器（且为最新版本） */
 export function isRealLibraryImported(): boolean {
-  return readJSON<unknown>(REAL_LIBRARY_FLAG, null) !== null;
+  const flag = readJSON<{ version?: number } | null>(REAL_LIBRARY_FLAG, null);
+  return flag !== null && flag.version === REAL_LIBRARY_VERSION;
 }
 
-/** 将摘录的真实药物库导入为「未审核」的用户自定义模板（幂等：按 id 跳过已存在的） */
+/**
+ * 将摘录的真实药物库导入为「未审核」的用户自定义模板。
+ * 幂等：先移除所有 real-* 种子条目再重新导入，保证浏览器中的条目与库版本一致。
+ * 注意：重导入会覆盖用户对 real-* 条目的手工修改（「已审核」状态会重置为「未审核」）。
+ */
 export function importRealDrugLibrary(): {
   imported: number;
   skipped: number;
   total: number;
 } {
-  const current = loadUserTemplates();
-  const existingIds = new Set(current.map((t) => t.id));
+  const current = loadUserTemplates().filter((t) => !t.id.startsWith('real-'));
   const now = new Date().toISOString();
-  let imported = 0;
   for (const seed of REAL_DRUG_LIBRARY) {
-    if (existingIds.has(seed.id)) continue;
     current.push(seedToTemplate(seed, now));
-    imported += 1;
   }
   saveUserTemplates(current);
-  writeJSON(REAL_LIBRARY_FLAG, { importedAt: now, version: 1 });
+  writeJSON(REAL_LIBRARY_FLAG, { importedAt: now, version: REAL_LIBRARY_VERSION });
   return {
-    imported,
-    skipped: REAL_DRUG_LIBRARY.length - imported,
+    imported: REAL_DRUG_LIBRARY.length,
+    skipped: 0,
     total: REAL_DRUG_LIBRARY.length,
   };
 }

@@ -62,9 +62,7 @@ export function TemplatesPage() {
     const result = importRealDrugLibrary();
     setTemplates(loadAllTemplates());
     setImportMessage(
-      result.imported > 0
-        ? `已导入 ${result.imported} 个真实药物模板（跳过已存在的 ${result.skipped} 个）。`
-        : `真实药物库已是最新：${result.total} 个模板均存在，未重复导入。`,
+      `已刷新真实药物库为最新版本：共 ${result.imported} 个模板（重置为「未审核」，编辑过的条目需重新核对）。`,
     );
   };
 
